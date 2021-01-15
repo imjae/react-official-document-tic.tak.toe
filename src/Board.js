@@ -4,12 +4,12 @@ import Square from "./Square";
 
 const Board = (props) => {
   const col = Array(3).fill(null);
-  const board = col.map((col, idx) => {
-    col = Array(3).fill(idx);
+  const boardArr = col.map((col, idx) => {
+    col = Array(3).fill(null);
     return col;
   });
 
-  const rowBoard = board.map((row, idx) => {
+  const board = boardArr.map((row, idx) => {
     const colBoard = row.map((value, idx) => {
       return <Square value={value} />;
     });
@@ -18,7 +18,7 @@ const Board = (props) => {
 
   useEffect(() => {}, []);
 
-  return <div>{rowBoard}</div>;
+  return <div>{board}</div>;
 };
 
 export default Board;
