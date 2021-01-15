@@ -33,6 +33,7 @@ class Board extends React.Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true,
     };
   }
 
@@ -43,8 +44,11 @@ class Board extends React.Component {
     // 1. 데이터 값을 직접 변경
     // 2. 원하는 변경 값을 가진 새로운 사본으로 데이터 교체
     const squares = this.state.squares.slice();
-    squares[i] = "X";
-    this.setState({ squares: squares });
+    squares[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
   }
 
   // square컴포넌트를 render할때 입력한 값의 인덱스에 있는 값을 props로 보내준다.
@@ -58,7 +62,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = "Next player: X";
+    const status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
 
     return (
       <div>
