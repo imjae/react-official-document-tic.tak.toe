@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-class Square extends React.Component {
+class Square_class extends React.Component {
   // square에 들어갈 정보를 board에서 관리하기 때문에 주석처리
   //   constructor(props) {
   //     super(props);
@@ -17,6 +17,14 @@ class Square extends React.Component {
       </button>
     );
   }
+}
+
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
