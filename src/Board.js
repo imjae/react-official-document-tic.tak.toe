@@ -1,24 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Square from "./Square";
 
 const Board = (props) => {
-  const col = Array(3).fill(null);
-  const boardArr = col.map((col, idx) => {
-    col = Array(3).fill(null);
-    return col;
-  });
+  console.log("Board Component");
+  let [boardDataArr, setBoardDataArr] = useState(initBoard(3, 3));
 
-  const board = boardArr.map((row, idx) => {
-    const colBoard = row.map((value, idx) => {
-      return <Square value={value} />;
-    });
-    return <div className="board-row">{colBoard}</div>;
-  });
+  const squareClick = (boardDataArr, x, y) => {
+    const arr = boardDataArr.slice();
+    arr[x][y] = "X";
+    setBoardDataArr(arr);
+  };
 
-  useEffect(() => {}, []);
-
-  return <div>{board}</div>;
+  return (
+    <div className="board-row">
+      {boardDataArr.map((row, rIdx) => {
+        const colBoard = row.map((value, cIdx) => {
+          return (
+            <Square
+              value={value}
+              x={rIdx}
+              y={cIdx}
+              boardDataArr={boardDataArr}
+              squareClick={squareClick}
+            />
+          );
+        });
+        return <div className="board-row">{colBoard}</div>;
+      })}
+    </div>
+  );
 };
 
 export default Board;
+
+const initBoard = (row = 3, col = 3) => {
+  return Array.from(Array(row), () => Array(col).fill(null));
+};
