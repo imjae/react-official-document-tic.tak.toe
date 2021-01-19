@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Board from "./Board";
 
@@ -7,25 +7,26 @@ const initBoard = (row = 3, col = 3) => {
 };
 
 const Game = () => {
+  let [currentTurn, setCurrentTurn] = useState("X");
   let [boardDataArr, setBoardDataArr] = useState(initBoard(3, 3));
-  let [xIsNext, setXIsNext] = useState("X");
-  let [currentXO, setCurrentXO] = useState("X");
+  let [nextTurn, setNextTurn] = useState("O");
 
+  // 게임 컴포넌트가 처음 랜더링 될때 
+  // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
   const squareClick = (boardDataArr, x, y) => {
-    console.log("setNext 전 : " + xIsNext);
-    setXIsNext((xIsNext === "true") ? "X" : "O");
-    console.log("setNext 후 : " + xIsNext);
-
     const copyBoardDataArr = boardDataArr.slice();
-    copyBoardDataArr[x][y] = currentXO;
+    copyBoardDataArr[x][y] = currentTurn;
     setBoardDataArr(copyBoardDataArr);
 
-    // console.log("setNext 전 : " + xIsNext);
-    // setXIsNext(false);
-    // console.log("setNext 후 : " + xIsNext);
-
-    setCurrentXO((xIsNext === "X") ? "X" : "O");
+    // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
+    setCurrentTurn(nextTurn);
+    // nextTurn 변경
+    setNextTurn((nextTurn === "X") ? "O" : "X");
   };
+
+  useEffect(() => {
+    
+  }, );
 
   return (
     <div className="game">

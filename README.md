@@ -36,4 +36,47 @@
   
 ### 2021.01.18
 > Hooks, 코드 구조 생각 않고 기능구현 부터 하기로 결정
+> 하나의 클릭 이벤트에서 state들을 셋팅하고 가져오는 부분이 매끄럽게 되지 않음
+
+### 2021.01.19
+> 망할 X O 번갈아서 나오게 하는게 왜 마음대로 안돼 setState가 비동기인가.. 물어볼 사람이 없네
+```
+let [currentTurn, setCurrentTurn] = useState("X");
+
+const squareClick = (boardDataArr, x, y) => {
+  (nextTurn === "X") ? setCurrentTurn("X") : setCurrentTurn("O");
+  
+  const copyBoardDataArr = boardDataArr.slice();
+  copyBoardDataArr[x][y] = currentTurn;
+  setBoardDataArr(copyBoardDataArr);
+  
+  setNextTurn((nextTurn === "X") ? "Y" : "X");
+};
+```
+> 이 코드에서 squareClick 이벤트가 처음 실행될때 setCurrentTurn 적용이 안되는 현상
+> setCurrentTurn을 사용하지 않고, nextTurn state 설정해주면서 바로 값을 넣어주면 정상 작동
+> 하나의 이벤트에서 두개 state 설정이 안되는건가 ?...
+```dotnetcli
+let [currentTurn, setCurrentTurn] = useState("X");
+  let [boardDataArr, setBoardDataArr] = useState(initBoard(3, 3));
+  let [nextTurn, setNextTurn] = useState("O");
+
+  // 게임 컴포넌트가 처음 랜더링 될때 
+  // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
+  const squareClick = (boardDataArr, x, y) => {
+    const copyBoardDataArr = boardDataArr.slice();
+    copyBoardDataArr[x][y] = currentTurn;
+    setBoardDataArr(copyBoardDataArr);
+
+    // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
+    setCurrentTurn(nextTurn);
+    // nextTurn 변경
+    setNextTurn((nextTurn === "X") ? "O" : "X");
+  };
+```
+> 그냥 로직이 잘못된거 였다.
+> 주석에 설명한 순서에 맞게 setState 로직을 태워줘야 동작한다.
+> 이런 이벤트성 함수를 만들때는 해당 이벤트가 해줘야하는 일을 먼저 처리하고
+> 다음 플래그에 대한 작업을 해주는 순서로 해야하는게 맞는것 같다.
+> 해당 이벤트가 실행되는 시점에서 setState를 하면 해당 이벤트가 종료되고 값이 적용되어 지는 느낌
 
