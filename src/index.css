@@ -1,6 +1,7 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 28px "Century Gothic", Futura, sans-serif;
     margin: 20px;
+    font-weight: bold;
 
   }
   
@@ -43,7 +44,7 @@ body {
   
   .game {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
   }
   
   .game-info {
