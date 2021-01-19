@@ -59,20 +59,20 @@ const squareClick = (boardDataArr, x, y) => {
 ```dotnetcli
 let [currentTurn, setCurrentTurn] = useState("X");
   let [boardDataArr, setBoardDataArr] = useState(initBoard(3, 3));
-  let [nextTurn, setNextTurn] = useState("O");
+  let [nextTurn, setNextTurn] = useState("O");  
 
   // 게임 컴포넌트가 처음 랜더링 될때 
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
   const squareClick = (boardDataArr, x, y) => {
-    const copyBoardDataArr = boardDataArr.slice();
-    copyBoardDataArr[x][y] = currentTurn;
-    setBoardDataArr(copyBoardDataArr);
+  const copyBoardDataArr = boardDataArr.slice();
+  copyBoardDataArr[x][y] = currentTurn;
+  setBoardDataArr(copyBoardDataArr);  
 
-    // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
-    setCurrentTurn(nextTurn);
-    // nextTurn 변경
-    setNextTurn((nextTurn === "X") ? "O" : "X");
-  };
+  // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
+  setCurrentTurn(nextTurn);
+  // nextTurn 변경
+  setNextTurn((nextTurn === "X") ? "O" : "X");
+};
 ```
 > 그냥 로직이 잘못된거 였다.
 > 주석에 설명한 순서에 맞게 setState 로직을 태워줘야 동작한다.

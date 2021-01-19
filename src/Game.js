@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Board from "./Board";
 
@@ -15,18 +15,16 @@ const Game = () => {
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
   const squareClick = (boardDataArr, x, y) => {
     const copyBoardDataArr = boardDataArr.slice();
-    copyBoardDataArr[x][y] = currentTurn;
-    setBoardDataArr(copyBoardDataArr);
-
-    // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
-    setCurrentTurn(nextTurn);
-    // nextTurn 변경
-    setNextTurn((nextTurn === "X") ? "O" : "X");
-  };
-
-  useEffect(() => {
     
-  }, );
+    if(copyBoardDataArr[x][y] == null) {
+      copyBoardDataArr[x][y] = currentTurn;
+      setBoardDataArr(copyBoardDataArr);
+       // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
+      setCurrentTurn(nextTurn);
+      // nextTurn 변경
+      setNextTurn((nextTurn === "X") ? "O" : "X");
+    }
+  };
 
   return (
     <div className="game">
