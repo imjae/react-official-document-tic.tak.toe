@@ -49,4 +49,10 @@ body {
   
   .game-info {
     margin-left: 20px;
+    flex-direction: row;
+  }
+
+  .game-history {
+    width: fit-content;
+    flex-direction: row;
   }
