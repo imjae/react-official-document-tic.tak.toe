@@ -8,39 +8,46 @@ const initBoard = (row = 3, col = 3) => {
 
 const Game = () => {
   const [currentTurn, setCurrentTurn] = useState("X");
+  const [nextTurn, setNextTurn] = useState("O");
   const [boardDataArr, setBoardDataArr] = useState(initBoard(3, 3));
   const [curCoordinate, setCurCoordinate] = useState({x: -1, y: -1});
-  const [nextTurn, setNextTurn] = useState("O");
   const [winnerCheck, setWinnerCheck] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
+  const [history, setHistory] = useState([]);
 
 
   // 게임 컴포넌트가 처음 랜더링 될때 
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
   const squareClick = (boardDataArr, x, y) => {
-    const copyBoardDataArr = boardDataArr.slice();
-    setCurCoordinate({
-      x: x,
-      y: y
-    });
+    console.log(history);
+    const copyBoardDataArr = [...boardDataArr];
+    setCurCoordinate(prevCoordinate => prevCoordinate = {x: x, y: y});
 
     if(copyBoardDataArr[x][y] == null && winnerCheck === false) {
       copyBoardDataArr[x][y] = currentTurn;
-      setBoardDataArr(copyBoardDataArr);
-
-      // 현재Turn에 nextTurn으로 셋팅 되어있던 차례를 적용
-      setCurrentTurn(nextTurn);
-      // nextTurn 변경
-      setNextTurn((nextTurn === "X") ? "O" : "X");
-
+      changeBoard(copyBoardDataArr);
+      changeTurn();
       setStepNumber(stepNumber+1);
     }
+  };
+
+  const changeBoard = (copyBoardDataArr) => {
+    setBoardDataArr(copyBoardDataArr);
+    
+    setHistory(history.concat(copyBoardDataArr));
+  };
+
+  const changeTurn = () => {
+    setCurrentTurn(nextTurn);
+    const _nextTurn = (nextTurn === "X") ? "O" : "X";
+    setNextTurn(_nextTurn);
   };
 
   useEffect(() => {
     if(curCoordinate.x === -1 && curCoordinate.y === -1) {
       return;
     }
+    // console.log(history);
 
     if(!winnerCheck) {
       if(winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y)) {
@@ -117,6 +124,8 @@ const Game = () => {
       </div>
       <div className="game-info">
         <ol>{stepNumber}</ol>
+        <button onClick={() => console.log(history)}>show History</button>
+        <button onClick={() => console.log(boardDataArr)}>show boardData</button>
       </div>
     </div>
   );

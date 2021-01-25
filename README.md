@@ -93,3 +93,4 @@ let [currentTurn, setCurrentTurn] = useState("X");
 > 3. 승자 체크 (수평, 수직, 대각선 차례로 검증) 검증 로직 추가
 > 4. readme 푸념글이 많아져 접기/펼치기 양식 추가
 > 5. 
+
