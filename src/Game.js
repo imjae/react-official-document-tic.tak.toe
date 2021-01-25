@@ -47,7 +47,6 @@ const Game = () => {
     if(curCoordinate.x === -1 && curCoordinate.y === -1) {
       return;
     }
-    // console.log(history);
 
     if(!winnerCheck) {
       if(winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y)) {
@@ -58,11 +57,6 @@ const Game = () => {
     }
   }, [curCoordinate]);
 
-  useEffect(() => {
-    console.log(boardDataArr);
-    setHistoryArr(historyArr.concat([boardDataArr]));
-  }, [boardDataArr]);
-  
   const winnerCheckValue = (boardDataArr, x, y) => {
     const hrizonMatchCheck = horizontalCheck(boardDataArr, x, y);
     const varticalMatchCheck = varticalCheck(boardDataArr, x, y);
@@ -116,40 +110,6 @@ const Game = () => {
 
     return true;
   };
-
-  const renderHistory = (historyArr) => {
-    return historyArr.map((history, idx) => {
-      return (
-        <li className="game-history" key={idx}> 
-          <button onClick={() => moveHistory(idx)}> #. {idx+1}이동 </button> 
-        </li>
-      );
-    });
-  };
-
-  const moveHistory = (step) => {
-    // 해당 인덱스로 이동하려면 historyArr 배열의 기록들을 선택한 step까지 돌려놓고 (slice 사용)
-    // 돌려놓은 historyArr의 마지막 기록을 다시 그려준다.
-    console.log(step);
-    if(step == 0) {
-      setHistoryArr(initBoard(3,3));
-      setBoardDataArr(initBoard(3,3));
-    } else {
-      setHistoryArr(historyArr.slice(0, step));
-    }
-  };
-
-  useEffect(() => {
-    if(historyArr.length == 0 ) {
-      return;
-    }
-    console.log("history useEffect");
-    console.log(historyArr);
-    setBoardDataArr(historyArr[historyArr.length-1]);
-    renderHistory(historyArr);
-
-  }, [historyArr]);
-
 
   const turnNotification = "현재 차례 : " + currentTurn;
   const winnerNotivication = nextTurn + " 승리 !";

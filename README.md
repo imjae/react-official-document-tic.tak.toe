@@ -19,7 +19,7 @@
 ### - 개인 과제
 > 1. ~~리액트 공식문서에서 권장하는 함수 컴포넌트로 변환~~
 > 2. contextAPI 사용하여 Game -> Board -> Square 컴포는트로 전달되어지는 props 간소화
-> 3. 리팩토링!  
+> 3. History를 배열 타입으로 관리할 경우 제대로 동작하지 않는 현상 해결
   
 
 
@@ -97,3 +97,7 @@ let [currentTurn, setCurrentTurn] = useState("X");
 
 > 1. history 기능 추가 (리스트 형식으로 표현)
 > 2. 해당 history로 이동 기능 추가
+
+
+### 2021.01.26
+> 1. history 관리를 배열로 할때 문제가 생겨, 문자열로 변경
