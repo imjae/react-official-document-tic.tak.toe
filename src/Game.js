@@ -33,8 +33,8 @@ const Game = () => {
 
   const changeBoard = (copyBoardDataArr) => {
     setBoardDataArr(copyBoardDataArr);
-    
-    setHistory(history.concat(copyBoardDataArr));
+    const tmpArr = [...history, copyBoardDataArr];
+    setHistory(tmpArr);
   };
 
   const changeTurn = () => {
