@@ -3,6 +3,7 @@ import { BOARD_SIZE } from "./Def";
 import { initBoard, convertHistoryArr } from "./Util";
 
 import Board from "./Board";
+import History from "./History";
 
 const Game = () => {
   const [currentTurn, setCurrentTurn] = useState("X");
@@ -136,6 +137,9 @@ const Game = () => {
         <button onClick={() => console.log(boardDataArr)}>
           show boardData
         </button>
+        <div>
+        <History stepNumber={stepNumber} history={convertHistoryArr(history)} />
+        </div>
       </div>
     </div>
   );
