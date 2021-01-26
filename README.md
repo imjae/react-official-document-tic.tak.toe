@@ -101,3 +101,7 @@ let [currentTurn, setCurrentTurn] = useState("X");
 
 ### 2021.01.26
 > 1. history 관리를 배열로 할때 문제가 생겨, 문자열로 변경
+> 2. history 컴포넌트 생성, 그리기 성공
+> 3. 해당 history로 돌아가는 로직 추가
+> 4. 문자열로 변경후 history에 추가하던 로직이 배열로 변경하고 하는 수고가 너무 커 JSON 객체를 이용하여 동작하도록 수정
+> 5. 왜 그냥 배열은 깊은 복사가 되지 않고, JSON 객체 이용하여 stringfy후 parse한 배열은 깊은 복사가 되는건지 이유를 모르겠다. 너무 궁금하다

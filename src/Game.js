@@ -18,7 +18,7 @@ const Game = () => {
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
   const squareClick = (boardDataArr, x, y) => {
     const copyBoardDataArr = [...boardDataArr];
-    setCurCoordinate((prevCoordinate) => (prevCoordinate = { x: x, y: y }));
+    setCurCoordinate({ x: x, y: y });
 
     if (copyBoardDataArr[x][y] == null && winnerCheck === false) {
       copyBoardDataArr[x][y] = currentTurn;
@@ -30,7 +30,8 @@ const Game = () => {
 
   const changeBoard = (copyBoardDataArr) => {
     setBoardDataArr(copyBoardDataArr);
-    const tmpArr = [...history, copyBoardDataArr + ""];
+    const tmpArr = JSON.parse(JSON.stringify(history));
+    tmpArr.push(JSON.parse(JSON.stringify(copyBoardDataArr)));
     setHistory(tmpArr);
   };
 
@@ -44,7 +45,6 @@ const Game = () => {
     if (curCoordinate.x === -1 && curCoordinate.y === -1) {
       return;
     }
-
     if (!winnerCheck) {
       if (winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y)) {
         setWinnerCheck(true);
@@ -125,6 +125,18 @@ const Game = () => {
 
   const turnNotification = "현재 차례 : " + currentTurn;
   const winnerNotivication = nextTurn + " 승리 !";
+
+  const jumpToHistory = (stepToJumpIdx) => {
+    // 현제 스텝 
+    const changedBoardData = (history[stepToJumpIdx]);
+    const changedHistory = history.slice(0, stepToJumpIdx);
+
+    setBoardDataArr(changedBoardData);
+    // setHistory(changedHistory);
+
+    // console.log(convertBoard);
+  };
+
   return (
     <div className="game">
       <div>{winnerCheck ? winnerNotivication : turnNotification}</div>
@@ -132,13 +144,8 @@ const Game = () => {
         <Board boardDataArr={boardDataArr} squareClick={squareClick} />
       </div>
       <div className="game-info">
-        <ol>{stepNumber}</ol>
-        <button onClick={() => console.log(history)}>show History</button>
-        <button onClick={() => console.log(boardDataArr)}>
-          show boardData
-        </button>
         <div>
-        <History stepNumber={stepNumber} history={convertHistoryArr(history)} />
+        <History stepNumber={stepNumber} jumpToHistory={jumpToHistory} />
         </div>
       </div>
     </div>
