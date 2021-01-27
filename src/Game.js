@@ -15,7 +15,7 @@ const Game = () => {
   const [winnerCheck, setWinnerCheck] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
   const [history, setHistory] = useState([]);
-  const [winnerNotificate, setWinnerNotificate] = useState(false);
+  const [winnerNotificate, setWinnerNotificate] = useState(<h3>{"현재 차례 : " + currentTurn}</h3>);
 
   // 게임 컴포넌트가 처음 랜더링 될때
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
@@ -69,14 +69,22 @@ const Game = () => {
     if (!winnerCheck) {
       if (winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y)) {
         setWinnerCheck(true);
-      } else {
-        setWinnerCheck(false);
       }
+    } else {
+      setWinnerCheck(false);
     }
   }, [curCoordinate]);
 
-  const turnNotification = <h3>{"현재 차례 : " + currentTurn}</h3>;
-  const winnerNotification = <h3>{currentTurn + " 승리 !"}</h3>;
+  // winnerCheck state 를 가지고 랜더링이 되도록 해야함
+  useEffect(() => {
+    console.log("winnercheck Hook");
+    if(winnerCheck) {
+      setWinnerNotificate(<h3>{currentTurn + " 승리 !"}</h3>);
+    } else {
+      setWinnerNotificate(<h3>{"현재 차례 : " + currentTurn}</h3>);
+    }
+    
+  }, [winnerCheck]);
 
   const jumpToHistory = (stepToJumpIdx) => {
     // 현재 스텝
@@ -86,14 +94,14 @@ const Game = () => {
     setStepNumber(history[stepToJumpIdx].step);
     setCurrentTurn(history[stepToJumpIdx].turn);
     setCurCoordinate(history[stepToJumpIdx].coordinate);
-    console.log(history[stepToJumpIdx].coordinate);
     setHistory(changedHistory);
-
   };
+
+  
 
   return (
     <div className="game">
-      <div>{winnerCheck ? winnerNotification : turnNotification}</div>
+      <div>{winnerNotificate}</div>
       <div className="game-board">
         <Board boardDataArr={boardDataArr} squareClick={squareClick} />
       </div>
