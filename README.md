@@ -119,3 +119,21 @@ let [currentTurn, setCurrentTurn] = useState("X");
 }
 ```
 > 4. 승리 판별 후 히스토리 돌아가면 승리 문구가 변경되지 않는현상 발견
+
+### 2021-01-28
+```javascript
+useEffect(() => {
+  console.log("winnercheck Hook");
+  if(winnerCheck) {
+    setWinnerNotificate(<h3>{currentTurn + " 승리 !"}</h3>);
+  } else {
+    setWinnerNotificate(<h3>{"현재 차례 : " + currentTurn}</h3>);
+  }
+
+}, [winnerCheck]);
+```
+> 1. winnerCheck 에 묶여있는 useEffect가 동작을 하지 않아 생각해보니 winnerCheck변수의 역할을 제대로 파악하지 못하고 있었음.
+>  (winnerCheck는 쭉 false상태이다가 승리조건에 만족하면 그제서야 true로 변경되어 게임이 끝났음을 알리는 역할임.)
+> 2. history state에 winnerCheck변수를 추가해, 히스토리가 변될때 winnerCheck도 변경해 주는 방식으로 해결
+>
+> 여기까지 이 게임을 만들어보면서 react에 대해 느낀점은 내가 만들어 놓은 함수와 state 들을 react에서 제공하는 기능과, lifeCycle에 맞게 잘 끼워맞춰 개발을 하는 느낌이다. 기능들을 조합하다 보면 신기하게 의도하지 않은 기능들이 동작을 하기도 하고, state 값을 셋팅하는 순서가 조금만 바껴도 완전히 다른 동작을 보여준다. 여지껏 했던 개발과 너무 달라 생소하다.
