@@ -109,3 +109,13 @@ let [currentTurn, setCurrentTurn] = useState("X");
 ### 2021.01.27
 > 1. Rules 스크립트 추가 - 게임 규칙에 관련된 로직 정리
 > 2. history 변경시 해당 turn의 정보도 같이 변경 되어야한다.
+> 3. history 에 아래와 같은 데이터 추가, history 변경 기능 구현
+```json
+{
+  board: boardDataArr,
+  step: stepNumber,
+  turn: currentTurn,
+  coordinate: curCoordinate
+}
+```
+> 4. 승리 판별 후 히스토리 돌아가면 승리 문구가 변경되지 않는현상 발견
