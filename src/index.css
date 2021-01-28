@@ -32,7 +32,10 @@ body {
     padding: 0;
     text-align: center;
   }
-  
+  .square_focus:focus {
+    outline: 0;
+  }
+
   .square {
     background: #fff;
     border: 1px solid #999;

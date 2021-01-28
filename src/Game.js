@@ -137,6 +137,7 @@ const Game = () => {
     setCurCoordinate(history[stepToJumpIdx].coordinate);
     setWinnerCheck(history[stepToJumpIdx].winnerCheck);
     setHistory(changedHistory);
+    setFocusSquareArr([]);
   };
   
 
