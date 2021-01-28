@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { BOARD_SIZE } from "./Def";
 import { initBoard } from "./Util";
-import { winnerCheckValue } from "./Rules";
+import { winnerCheckValue, isEndCheck } from "./Rules";
 
 import Board from "./Board";
 import History from "./History";
@@ -76,11 +76,15 @@ const Game = () => {
 
   // winnerCheck state 를 가지고 랜더링이 되도록 해야함
   useEffect(() => {
-    console.log("winnercheck Hook");
+    // TODO notificate 에 태그 자체를 셋팅하는거 너무 없어보인다. 나중에 수정하자.
     if(winnerCheck) {
       setWinnerNotificate(<h3>{((currentTurn === "X" )? "O" : "X") + " 승리 !"}</h3>);
     } else {
-      setWinnerNotificate(<h3>{"현재 차례 : " + currentTurn}</h3>);
+      if(isEndCheck(stepNumber)) {
+        setWinnerNotificate(<h3>{"무 승 부 !"}</h3>);
+      } else {
+        setWinnerNotificate(<h3>{"현재 차례 : " + currentTurn}</h3>);
+      }
     }
     
   }, [winnerCheck, currentTurn]);

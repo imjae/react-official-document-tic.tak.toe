@@ -1,3 +1,5 @@
+import { BOARD_SIZE } from "./Def";
+
 export const winnerCheckValue = (boardDataArr, x, y) => {
   const hrizonMatchCheck = horizontalCheck(boardDataArr, x, y);
   const varticalMatchCheck = varticalCheck(boardDataArr, x, y);
@@ -64,4 +66,14 @@ export const diagonalCheck = (boardDataArr, x, y) => {
   }
 
   return true;
+};
+
+
+export const isEndCheck = (step) => {
+  const totalStep = BOARD_SIZE * BOARD_SIZE;
+  if (step === totalStep) {
+    return true;
+  } else {
+    return false;
+  }
 };
