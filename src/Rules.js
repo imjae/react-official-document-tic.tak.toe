@@ -2,12 +2,16 @@ import { BOARD_SIZE } from "./Def";
 
 export const winnerCheckValue = (boardDataArr, x, y) => {
   const hrizonMatchCheck = horizontalCheck(boardDataArr, x, y);
-  const varticalMatchCheck = varticalCheck(boardDataArr, x, y);
-  const diagonalMatchCheck = diagonalCheck(boardDataArr, x, y);
+  const verticalMatchCheck = verticalCheck(boardDataArr, x, y);
+  const downDiagonalMatchCheck = downDiagonalCheck(boardDataArr, x, y);
+  const upDiagonalMatchCheck = upDiagonalCheck(boardDataArr, x, y);
 
-  return hrizonMatchCheck || varticalMatchCheck || diagonalMatchCheck
-    ? true
-    : false;
+  return {
+    hrizonMatchCheck : hrizonMatchCheck,
+    verticalMatchCheck : verticalMatchCheck,
+    downDiagonalMatchCheck : downDiagonalMatchCheck,
+    upDiagonalMatchCheck : upDiagonalMatchCheck
+  };
 };
 
 export const horizontalCheck = (boardDataArr, x, y) => {
@@ -24,10 +28,10 @@ export const horizontalCheck = (boardDataArr, x, y) => {
   return true;
 };
 
-export const varticalCheck = (boardDataArr, x, y) => {
+export const verticalCheck = (boardDataArr, x, y) => {
   // 수직 체크 y축 고정
-  let varticalLength = boardDataArr[y].length;
-  for (let i = 0; i < varticalLength - 1; i++) {
+  let verticalLength = boardDataArr[y].length;
+  for (let i = 0; i < verticalLength - 1; i++) {
     if (
       boardDataArr[i][y] !== boardDataArr[i + 1][y] ||
       boardDataArr[i][y] === null
@@ -38,7 +42,7 @@ export const varticalCheck = (boardDataArr, x, y) => {
   return true;
 };
 
-export const diagonalCheck = (boardDataArr, x, y) => {
+export const downDiagonalCheck = (boardDataArr, x, y) => {
   // 대각선 체크
   const len = boardDataArr.length;
   if (x - y === 0) {
@@ -51,7 +55,16 @@ export const diagonalCheck = (boardDataArr, x, y) => {
         return false;
       }
     }
-  } else if (x + y === len - 1) {
+  } else {
+    return false;
+  }
+  return true;
+};
+
+export const upDiagonalCheck = (boardDataArr, x, y) => {
+  // 대각선 체크
+  const len = boardDataArr.length;
+  if (x + y === len - 1) {
     // / 모양 대각선 검증
     for (let i = 0; i < len - 1; i++) {
       if (
@@ -64,10 +77,8 @@ export const diagonalCheck = (boardDataArr, x, y) => {
   } else {
     return false;
   }
-
   return true;
 };
-
 
 export const isEndCheck = (step) => {
   const totalStep = BOARD_SIZE * BOARD_SIZE;

@@ -1,10 +1,10 @@
 import React from "react";
 
 const Square = (props) => {
-  const { value, x, y, boardDataArr, squareClick } = props;
+  const { value, x, y, boardDataArr, squareClick, isFocus } = props;
 
   return (
-    <button className="square" onClick={() => squareClick(boardDataArr, x, y)}>
+    <button className={isFocus == true ? "square_focus" : "square"} onClick={() => squareClick(boardDataArr, x, y)}>
       {value}
     </button>
   );

@@ -16,6 +16,7 @@ const Game = () => {
   const [stepNumber, setStepNumber] = useState(0);
   const [history, setHistory] = useState([]);
   const [winnerNotificate, setWinnerNotificate] = useState(<h3>{"현재 차례 : " + currentTurn}</h3>);
+  const [focusSquareArr, setFocusSquareArr] = useState([]);
 
   // 게임 컴포넌트가 처음 랜더링 될때
   // 현재 Turn은 X 이고 다음 Turn은 O로 설정 하고 시작
@@ -49,7 +50,6 @@ const Game = () => {
         })
       )
     );
-    console.log(tmpArr);
     setHistory(tmpArr);
   };
 
@@ -68,7 +68,45 @@ const Game = () => {
     }
 
     if (!winnerCheck) {
-      if (winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y)) {
+      const {
+        hrizonMatchCheck,
+        verticalMatchCheck,
+        downDiagonalMatchCheck,
+        upDiagonalMatchCheck,
+      } = winnerCheckValue(boardDataArr, curCoordinate.x, curCoordinate.y);
+
+      const {
+        x, y
+      } = curCoordinate;
+
+      if (hrizonMatchCheck | verticalMatchCheck | downDiagonalMatchCheck | upDiagonalMatchCheck) {
+        let tmpArr = [];
+        if (hrizonMatchCheck) {
+          // 수평
+          // 몇번쨰 로우인지 확인
+          for (let i=0; i<BOARD_SIZE; i++) {
+            tmpArr.push([x, i]);
+          }
+        } else if (verticalMatchCheck) {
+          // 수직
+          // 몇번째 컬럼인지 확인
+          for (let i=0; i<BOARD_SIZE; i++) {
+            tmpArr.push([i, y]);
+          }
+        } else if (downDiagonalMatchCheck) {
+          // - \ 대각
+          // 00부터 BOARD_SIZE 만큼 증가
+          for (let i=0; i<BOARD_SIZE; i++) {
+            tmpArr.push([i, i]);
+          }
+        } else if (upDiagonalMatchCheck) {
+          // - / 대각
+          // BOARD_SIZE,0 ~ 0,BOARD_SIZE
+          for (let i=0; i<BOARD_SIZE; i++) {
+            tmpArr.push([BOARD_SIZE-1-i, i]);
+          }
+        }
+        setFocusSquareArr(tmpArr);
         setWinnerCheck(true);
       }
     }
@@ -106,7 +144,7 @@ const Game = () => {
     <div className="game">
       <div>{winnerNotificate}</div>
       <div className="game-board">
-        <Board boardDataArr={boardDataArr} squareClick={squareClick} />
+        <Board boardDataArr={boardDataArr} squareClick={squareClick} focusSquareArr={focusSquareArr} />
       </div>
       <div className="game-info">
         <div>
