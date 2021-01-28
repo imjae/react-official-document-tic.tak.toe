@@ -149,7 +149,7 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div>
-          <History stepNumber={stepNumber} jumpToHistory={jumpToHistory} />
+          <History stepNumber={stepNumber} jumpToHistory={jumpToHistory} history={history} />
         </div>
       </div>
     </div>
