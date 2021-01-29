@@ -1,4 +1,4 @@
-# 🖕REACT-DOCUMENT-TUTORIAL-TIC.TAC.TOK🖕
+# 🖕REACT-DOCUMENT-TUTORIAL-TIC.TAC.TO🖕
 > 리액트 공식문서에서 튜토리얼에 해당하는 틱택토 게임 구현  
 > 전체적인 리액트 구조를 파악하는데 좋은 예시가 될 것
 > 최대한 여러 종류의 Hooks을 적용시키려고 노력
